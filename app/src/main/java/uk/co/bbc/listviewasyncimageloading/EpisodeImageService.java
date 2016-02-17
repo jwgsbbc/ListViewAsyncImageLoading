@@ -12,7 +12,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-public final class ImageService {
+public final class EpisodeImageService {
 
     private Handler mHandler = new Handler();
 

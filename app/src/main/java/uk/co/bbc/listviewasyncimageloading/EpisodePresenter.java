@@ -4,23 +4,31 @@ import android.graphics.Bitmap;
 
 final class EpisodePresenter implements Presenter<EpisodeListView> {
 
+    private final EpisodeProvider mEpisodeProvider;
     private final ImageCache mImageCache;
-    private final ImageService mImageService;
-    private final String[] mIds;
+    private final EpisodeImageService mEpisodeImageService;
+
+    private String[] mIds;
 
     private EpisodeListView mView;
 
-    public EpisodePresenter(String[] ids, ImageCache imageCache, ImageService imageService) {
+    public EpisodePresenter(EpisodeProvider episodeProvider, EpisodeImageService episodeImageService, ImageCache imageCache) {
+        mEpisodeProvider = episodeProvider;
         mImageCache = imageCache;
-        mImageService = imageService;
-        mIds = ids;
+        mEpisodeImageService = episodeImageService;
     }
 
     @Override
     public void onViewCreated(EpisodeListView view) {
         mView = view;
         view.setEpisodeViewModelImageProvider(new MyEpisodeViewModelProvider());
-        view.setEpisodeCount(mIds.length);
+        mEpisodeProvider.requestEpisodes(new EpisodesReceiver() {
+            @Override
+            public void onEpisodeReceived(String[] ids) {
+                mIds = ids;
+                mView.setEpisodeCount(mIds.length);
+            }
+        });
     }
 
     @Override
@@ -32,7 +40,7 @@ final class EpisodePresenter implements Presenter<EpisodeListView> {
         String id = mIds[position];
         Bitmap cached = mImageCache.getImage(id);
         if(cached==null) {
-            mImageService.requestImage(id, new MyImageReceiver(position));
+            mEpisodeImageService.requestImage(id, new MyImageReceiver(position));
         }
         return cached;
     }
