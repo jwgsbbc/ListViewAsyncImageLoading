@@ -2,7 +2,7 @@ package uk.co.bbc.listviewasyncimageloading;
 
 import android.graphics.Bitmap;
 
-final class EpisodePresenter {
+final class EpisodePresenter implements Presenter<EpisodeListView> {
 
     private final ImageCache mImageCache;
     private final ImageService mImageService;
@@ -16,12 +16,14 @@ final class EpisodePresenter {
         mIds = ids;
     }
 
+    @Override
     public void onViewCreated(EpisodeListView view) {
         mView = view;
         view.setEpisodeViewModelImageProvider(new MyEpisodeViewModelProvider());
         view.setEpisodeCount(mIds.length);
     }
 
+    @Override
     public void onViewDestroyed() {
         mView = null;
     }
