@@ -1,6 +1,7 @@
 package uk.co.bbc.listviewasyncimageloading;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -29,21 +30,20 @@ class EpisodeListViewImpl implements EpisodeListView {
         @Override
         public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_view, parent, false);
-            return new MyViewHolder(view);
+            return new EpisodeViewHolder(view);
         }
 
         @Override
         public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-            MyViewHolder vh = (MyViewHolder) holder;
+            EpisodeViewHolder vh = (EpisodeViewHolder) holder;
             EpisodeViewModel viewModel = mEpisodeViewModelProvider.getEpisodeViewModel(position);
-            if(viewModel.image!=null) {
-                vh.imageView.setVisibility(View.VISIBLE);
-                vh.imageView.setImageBitmap(viewModel.image);
+            Bitmap image = viewModel.image;
+            if (image == null) {
+                vh.clearImage();
+            } else {
+                vh.setImage(image);
             }
-            else {
-                vh.imageView.setVisibility(View.INVISIBLE);
-            }
-            vh.textView.setText(viewModel.title);
+            vh.setText(viewModel.title);
         }
 
         @Override
