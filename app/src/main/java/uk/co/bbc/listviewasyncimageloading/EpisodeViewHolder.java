@@ -7,9 +7,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 class EpisodeViewHolder extends RecyclerView.ViewHolder {
-    public ImageView imageView;
-    public TextView textView;
-    public boolean needsFade;
+    private ImageView imageView;
+    private TextView textView;
+    private boolean needsFade;
 
     public EpisodeViewHolder(View view) {
         super(view);

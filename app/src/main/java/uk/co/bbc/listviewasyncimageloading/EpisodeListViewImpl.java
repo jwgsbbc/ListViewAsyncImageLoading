@@ -53,7 +53,7 @@ class EpisodeListViewImpl implements EpisodeListView {
     }
 
     @Override
-    public void setEpisodeViewModelImageProvider(EpisodeViewModelProvider episodeImageProvider) {
+    public void setEpisodeViewModelProvider(EpisodeViewModelProvider episodeImageProvider) {
         mEpisodeViewModelProvider = episodeImageProvider;
     }
 

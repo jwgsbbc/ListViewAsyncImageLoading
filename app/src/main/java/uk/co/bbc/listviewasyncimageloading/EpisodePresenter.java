@@ -21,7 +21,7 @@ final class EpisodePresenter implements Presenter<EpisodeListView> {
     @Override
     public void onViewCreated(EpisodeListView view) {
         mView = view;
-        view.setEpisodeViewModelImageProvider(new MyEpisodeViewModelProvider());
+        view.setEpisodeViewModelProvider(new MyEpisodeViewModelProvider());
         mEpisodeProvider.requestEpisodes(new EpisodesReceiver() {
             @Override
             public void onEpisodeReceived(String[] ids) {
